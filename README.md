@@ -1,4 +1,4 @@
-==pg-cloud==
+#pg-cloud
 
 云端前端环境生成器
 
