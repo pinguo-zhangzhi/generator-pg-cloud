@@ -7,7 +7,7 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
 gulp.task('styles', function () {<% if (includeSass) { %>
-  return gulp.src('app/views/index.scss')
+  return gulp.src('app/**/*.scss')
     .pipe($.sourcemaps.init())
     .pipe($.sass({
       outputStyle: 'nested', // libsass doesn't support expanded yet
@@ -15,7 +15,7 @@ gulp.task('styles', function () {<% if (includeSass) { %>
       includePaths: ['.'],
       onError: console.error.bind(console, 'Sass error:')
     }))<% } else { %>
-  return gulp.src('app/views/index.css')
+  return gulp.src('app/**/*.css')
     .pipe($.sourcemaps.init())<% } %>
     .pipe($.postcss([
       require('autoprefixer-core')({browsers: ['last 1 version']})
@@ -25,6 +25,7 @@ gulp.task('styles', function () {<% if (includeSass) { %>
     .pipe(reload({stream: true}));
 });
 
+/*JS语法检查*/
 gulp.task('jshint', function () {
   return gulp.src('app/**/*.js')
     .pipe(reload({stream: true, once: true}))
@@ -33,10 +34,11 @@ gulp.task('jshint', function () {
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
 
+/*解析html文件并进行标签build*/
 gulp.task('html', ['styles'], function () {
   var assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
 
-  return gulp.src('app/*.html')
+  return gulp.src('app/**/*.html')
     .pipe(assets)
     .pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', $.csso()))
@@ -46,13 +48,12 @@ gulp.task('html', ['styles'], function () {
     .pipe(gulp.dest('dist'));
 });
 
+/*压缩图片*/
 gulp.task('images', function () {
   return gulp.src('app/resource/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
       interlaced: true,
-      // don't remove IDs from SVGs, they are often used
-      // as hooks for embedding and styling
       svgoPlugins: [{cleanupIDs: false}]
     })))
     .pipe(gulp.dest('dist/images'));
@@ -77,6 +78,7 @@ gulp.task('extras', function () {
 
 gulp.task('clean', require('del').bind(null, ['.tmp', 'dist']));
 
+/*启动开发环境服务*/
 gulp.task('serve', ['styles'], function () {
   browserSync({
     notify: false,
@@ -89,39 +91,47 @@ gulp.task('serve', ['styles'], function () {
     }
   });
 
-  // watch for changes
+  /*监听文件改变*/
   gulp.watch([
     'app/**/*.html',
     'app/**/*.js',
-    'app/resource/images/**/*'
+    'app/resource/**/*'
   ]).on('change', reload);
 
   gulp.watch('app/**/*.<%= includeSass ? 'scss' : 'css' %>', ['styles']);
   gulp.watch('bower.json', ['wiredep']);
 });
 
-// inject bower components
+/*启动构建环境服务*/
+gulp.task('dist', ['styles'], function () {
+  browserSync({
+    notify: false,
+    port: 9000,
+    server: {
+      baseDir: ['.tmp', 'app'],
+      routes: {
+        '/bower_components': 'bower_components'
+      }
+    }
+  });
+});
+
+/*注入bower依赖*/
 gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
-<% if (includeSass) { %>
-  gulp.src('app/views/*.scss')
+  gulp.src('app/**/*.html')
     .pipe(wiredep({
-      ignorePath: /^(\.\.\/)+/
-    }))
-    .pipe(gulp.dest('app/views'));
-<% } %>
-  gulp.src('app/*.html')
-    .pipe(wiredep({<% if (includeSass && includeBootstrap) { %>
-      exclude: ['bootstrap-sass-official'],<% } %>
       ignorePath: /^(\.\.\/)*\.\./
     }))
     .pipe(gulp.dest('app'));
 });
 
+/*构建备用方法*/
 gulp.task('build', ['jshint', 'html', 'images', 'extras'], function () {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
+/*构建建议方法*/
 gulp.task('default', ['clean'], function () {
   gulp.start('build');
 });

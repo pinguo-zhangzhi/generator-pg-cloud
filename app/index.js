@@ -68,12 +68,6 @@ module.exports = yeoman.generators.Base.extend({
       }]
     }];
 
-      // {
-      //   name: 'Bootstrap',
-      //   value: 'includeBootstrap',
-      //   checked: true
-      // }
-
     this.prompt(prompts, function (answers) {
       var features = answers.features;
 
@@ -81,8 +75,6 @@ module.exports = yeoman.generators.Base.extend({
         return features.indexOf(feat) !== -1;
       };
 
-      // manually deal with the response, get back and store the results.
-      // we change a bit this way of doing to automatically do this in the self.prompt() method.
       this.includeSass = hasFeature('includeSass');
       this.includeJquery = hasFeature('includeJquery');
       this.includeBackbone = hasFeature('includeBackbone');
@@ -113,20 +105,9 @@ module.exports = yeoman.generators.Base.extend({
         dependencies: {}
       };
 
-      if (this.includeBootstrap) {
-        var bs = 'bootstrap' + (this.includeSass ? '-sass-official' : '');
-        bower.dependencies[bs] = '~3.3.1';
-      } else {
-        bower.dependencies.jquery = '~2.1.1';
-      }
-
-      if (this.includeBackbone) {
-        bower.dependencies.backbone = '*';
-      }
-
-      if (this.includeSeajs) {
-        bower.dependencies.seajs = '*';
-      };
+      if (this.includeJquery) bower.dependencies.jquery = '~2.1.1';
+      if (this.includeBackbone) bower.dependencies.backbone = '*';
+      if (this.includeSeajs) bower.dependencies.seajs = '*';
 
       this.copy('bowerrc', '.bowerrc');
       this.write('bower.json', JSON.stringify(bower, null, 2));
@@ -161,42 +142,16 @@ module.exports = yeoman.generators.Base.extend({
       this.indexFile = this.src.read('index.html');
       this.indexFile = this.engine(this.indexFile, this);
 
-      // wire Bootstrap plugins
-      if (this.includeBootstrap) {
-        var bs = '/bower_components/';
-
-        if (this.includeSass) {
-          bs += 'bootstrap-sass-official/assets/javascripts/bootstrap/';
-        } else {
-          bs += 'bootstrap/js/';
-        }
-
-        this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
-          bs + 'affix.js',
-          bs + 'alert.js',
-          bs + 'dropdown.js',
-          bs + 'tooltip.js',
-          bs + 'modal.js',
-          bs + 'transition.js',
-          bs + 'button.js',
-          bs + 'popover.js',
-          bs + 'carousel.js',
-          bs + 'scrollspy.js',
-          bs + 'collapse.js',
-          bs + 'tab.js'
-        ]);
-      }
-
-      this.log(this.indexFile);
-
       this.indexFile = this.appendFiles({
         html: this.indexFile,
         fileType: 'js',
-        optimizedPath: 'index.js',
-        sourceFileList: ['index.js']
+        optimizedPath: '/scripts/index/index.js',
+        sourceFileList: ['/views/index.js']
       });
 
-      this.log(this.indexFile);
+      console.log(this.appendFiles.toString());
+      console.log(this.generateBlock.toString());
+  
 
       this.write('app/views/index.html', this.indexFile);
     },
@@ -204,15 +159,16 @@ module.exports = yeoman.generators.Base.extend({
     app: function () {
       this.mkdir('app');
       this.mkdir('app/components');
+      this.mkdir('app/common');
       this.mkdir('app/views');
       this.mkdir('app/resource');
-      this.mkdir('app/common');
       this.mkdir('app/resource/images');
       this.copy('index.js', 'app/views/index.js');
     }
   },
 
   install: function () {
+    
     var howToInstall =
       '\nAfter running ' +
       chalk.yellow.bold('npm install & bower install') +
@@ -234,12 +190,12 @@ module.exports = yeoman.generators.Base.extend({
     this.on('end', function () {
       var bowerJson = this.dest.readJSON('bower.json');
 
-      // wire Bower packages to .html
+      //将bower_components里的依赖注入index.html
       wiredep({
         bowerJson: bowerJson,
         directory: 'bower_components',
         //排除列表
-        //exclude: ['bootstrap-sass', 'bootstrap.js'],
+        exclude: [],
         ignorePath: /^(\.\.\/)*\.\./,
         src: 'app/views/index.html'
       });
