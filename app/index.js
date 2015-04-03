@@ -50,10 +50,6 @@ module.exports = yeoman.generators.Base.extend({
       name: 'features',
       message: 'What more would you like?',
       choices: [{
-        name: 'Sass',
-        value: 'includeSass',
-        checked: true
-      },{
         name:'jQuery',
         value:'includeJquery',
         checked:true
@@ -75,7 +71,7 @@ module.exports = yeoman.generators.Base.extend({
         return features.indexOf(feat) !== -1;
       };
 
-      this.includeSass = hasFeature('includeSass');
+      //this.includeSass = hasFeature('includeSass');
       this.includeJquery = hasFeature('includeJquery');
       this.includeBackbone = hasFeature('includeBackbone');
       this.includeSeajs = hasFeature('includeSeajs');
@@ -127,13 +123,13 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     mainStylesheet: function () {
-      var css = 'index';
+      var css = 'index.css';
 
-      if (this.includeSass) {
-        css += '.scss';
-      } else {
-        css += '.css';
-      }
+      // if (this.includeSass) {
+      //   css += '.scss';
+      // } else {
+      //   css += '.css';
+      // }
 
       this.copy(css, 'app/views/' + css);
     },
@@ -148,9 +144,6 @@ module.exports = yeoman.generators.Base.extend({
         optimizedPath: '/scripts/index/index.js',
         sourceFileList: ['/views/index.js']
       });
-
-      console.log(this.appendFiles.toString());
-      console.log(this.generateBlock.toString());
   
 
       this.write('app/views/index.html', this.indexFile);

@@ -1,6 +1,6 @@
 {
   "name": "generator-pg-cloud",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Scaffold out a front-end web app For PG tech",
   "license": "BSD",
   "repository": {
@@ -45,5 +45,13 @@
   "devDependencies": {
     "mocha": "*"
   },
-  "homepage": "https://github.com/pinguo-zhangzhi/generator-pg-cloud"
+  "homepage": "https://github.com/pinguo-zhangzhi/generator-pg-cloud",
+  "readme": "pg-cloud\n\n## License\n\n[BSD license](http://opensource.org/licenses/bsd-license.php)\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/pinguo-zhangzhi/generator-pg-cloud/issues"
+  },
+  "_id": "generator-pg-cloud@0.0.2",
+  "_shasum": "f960838fc4ac3612240c34fb03efdf81cdadd998",
+  "_from": "generator-pg-cloud@*"
 }

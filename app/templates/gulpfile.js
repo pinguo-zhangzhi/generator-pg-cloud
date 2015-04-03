@@ -6,17 +6,9 @@ var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-gulp.task('styles', function () {<% if (includeSass) { %>
-  return gulp.src('app/**/*.scss')
-    .pipe($.sourcemaps.init())
-    .pipe($.sass({
-      outputStyle: 'nested', // libsass doesn't support expanded yet
-      precision: 10,
-      includePaths: ['.'],
-      onError: console.error.bind(console, 'Sass error:')
-    }))<% } else { %>
+gulp.task('styles', function () {
   return gulp.src('app/**/*.css')
-    .pipe($.sourcemaps.init())<% } %>
+    .pipe($.sourcemaps.init())
     .pipe($.postcss([
       require('autoprefixer-core')({browsers: ['last 1 version']})
     ]))
@@ -98,7 +90,7 @@ gulp.task('serve', ['styles'], function () {
     'app/resource/**/*'
   ]).on('change', reload);
 
-  gulp.watch('app/**/*.<%= includeSass ? 'scss' : 'css' %>', ['styles']);
+  gulp.watch('app/**/*.css', ['styles']);
   gulp.watch('bower.json', ['wiredep']);
 });
 
