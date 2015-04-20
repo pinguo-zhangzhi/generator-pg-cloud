@@ -12,6 +12,7 @@ generator-pg-cloud(云端前端环境生成器)
     3.下载本生成器并放入nodejs 全局root
     4.进入generator-pg-cloud 文件夹,执行 $npm install
     5.也可忽略3，4步骤，直接运行$npm install -g generator-pg-cloud(取决于是否将generator-pg-cloud发布到npm)
+    PS:对于此流程不熟悉的同学，可单独下载oneKeyInstall.sh并将其放入workspace目录，运行sh oneKeyInstall.sh XXX(工程名)自动生成。
   
 ###工程环境生成向导
         1.新建项目文件夹如proj
