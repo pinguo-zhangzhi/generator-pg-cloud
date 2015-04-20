@@ -1,10 +1,23 @@
 /*global -$ */
 'use strict';
 // generated on <%= (new Date).toISOString().split('T')[0] %> using <%= pkg.name %> <%= pkg.version %>
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
+var gulp = require('gulp'),
+    $ = require('gulp-load-plugins')(),
+    browserSync = require('browser-sync'),
+    reload = browserSync.reload;
+
+<%if(includeSeajs){%>
+var seajsCombo = require('seajs-pg-cloud');
+
+gulp.task('seajs', function(){
+    gulp.src('dist/**/*.html')
+    .pipe(seajsCombo({
+        pwdPath:process.env.PWD
+    }))
+    .pipe(gulp.dest('dist'));
+});
+
+<%}%>
 
 gulp.task('styles', function () {
   return gulp.src('app/**/*.css')
@@ -42,14 +55,19 @@ gulp.task('html', ['styles'], function () {
 
 /*压缩图片*/
 gulp.task('images', function () {
-  return gulp.src('app/resource/images/**/*')
-    .pipe($.cache($.imagemin({
-      progressive: true,
-      interlaced: true,
-      svgoPlugins: [{cleanupIDs: false}]
-    })))
-    .pipe(gulp.dest('dist/images'));
+  return gulp.src('app/resource/**/*')
+    .pipe(gulp.dest('dist/resource'));
 });
+
+// gulp.task('images', function () {
+//   return gulp.src('app/resource/**/*')
+//     .pipe($.cache($.imagemin({
+//       progressive: true,
+//       interlaced: true,
+//       svgoPlugins: [{cleanupIDs: false}]
+//     })))
+//     .pipe(gulp.dest('dist/resource'));
+// });
 
 // gulp.task('fonts', function () {
 //   return gulp.src(require('main-bower-files')({
@@ -98,9 +116,9 @@ gulp.task('serve', ['styles'], function () {
 gulp.task('dist', ['styles'], function () {
   browserSync({
     notify: false,
-    port: 9000,
+    port: 9001,
     server: {
-      baseDir: ['.tmp', 'app'],
+      baseDir: 'dist',
       routes: {
         '/bower_components': 'bower_components'
       }
@@ -119,7 +137,8 @@ gulp.task('wiredep', function () {
 });
 
 /*构建备用方法*/
-gulp.task('build', ['jshint', 'html', 'images', 'extras'], function () {
+gulp.task('build', ['wiredep', 'html', 'images', 'extras'], function () {
+  <%if(includeSeajs){%>gulp.start('seajs');<%}%>
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
