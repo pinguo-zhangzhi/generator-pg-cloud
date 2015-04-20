@@ -1,6 +1,11 @@
 generator-pg-cloud(云端前端环境生成器)
 ========================
 
+###why do it?
+
+随着当前前端人员的逐渐增多，开发环境和工具各不相同，影响了开发效率，增加了管理成本，急需要一套完整的统一开发和部署环境来解决
+生产力和管理问题，在多人协作，性能优化，效率提升，规范化等方面大幅提升。
+
 ###本机运行环境准备(仅一次)
     1.安装nodejs环境
     2.安装yeoman: $npm install -g yo
@@ -24,6 +29,11 @@ generator-pg-cloud(云端前端环境生成器)
 ###使用bower
         1.$bower install --save jquery
         2.$bower uninstall --save jquery
+        在gulp serve开启的情况下，运行以上命令，将会自动注入或移除依赖 <!--bower:js--> 标签
+###使用seajs
+        1.因为新版的seajs于老版本的区别，请使用script标签当作use入口文件，并添加seajs属性，如此seajs-pg-cloud可进行自动搜寻
+        后合并压缩。
+        
         
 
 ## License
