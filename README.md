@@ -20,7 +20,6 @@ generator-pg-cloud(云端前端环境生成器)
         4.$gulp dist 启动构建目录服务9001端口
         5.$gulp wiredep 根据bower.json对HTML文件进行依赖注入
         6.$gulp jshint JS语法检查
-        7.$gulp images 压缩图片
         
 ###使用bower
         1.$bower install --save jquery
