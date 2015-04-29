@@ -19,17 +19,6 @@ gulp.task('seajs', function(){
 
 <%}%>
 
-gulp.task('styles', function () {
-  return gulp.src('app/**/*.css')
-    .pipe($.sourcemaps.init())
-    .pipe($.postcss([
-      require('autoprefixer-core')({browsers: ['last 1 version']})
-    ]))
-    .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/styles'))
-    .pipe(reload({stream: true}));
-});
-
 /*JS语法检查*/
 gulp.task('jshint', function () {
   return gulp.src('app/**/*.js')
@@ -40,7 +29,7 @@ gulp.task('jshint', function () {
 });
 
 /*解析html文件并进行标签build*/
-gulp.task('html', ['styles'], function () {
+gulp.task('html', function () {
   var assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
 
   return gulp.src('app/**/*.html')
@@ -109,13 +98,12 @@ gulp.task('serve', function () {
     'app/resource/**/*'
   ]).on('change', reload);
 
-  //gulp.watch('app/**/*.css', ['styles']);
   gulp.watch('app/**/*.css').on('change', reload);
   gulp.watch('bower.json', ['wiredep']);
 });
 
 /*启动构建环境服务*/
-gulp.task('dist', ['styles'], function () {
+gulp.task('dist', function () {
   browserSync({
     notify: false,
     port: 9001,
