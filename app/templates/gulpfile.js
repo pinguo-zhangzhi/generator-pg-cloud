@@ -93,6 +93,7 @@ gulp.task('serve', function () {
   browserSync({
     notify: false,
     port: 9000,
+    startPath:'/views',
     server: {
       baseDir: ['.tmp', 'app'],
       routes: {
@@ -118,6 +119,7 @@ gulp.task('dist', ['styles'], function () {
   browserSync({
     notify: false,
     port: 9001,
+    startPath:'/views',
     server: {
       baseDir: 'dist',
       routes: {
