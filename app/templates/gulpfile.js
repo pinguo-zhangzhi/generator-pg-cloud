@@ -89,7 +89,7 @@ gulp.task('extras', function () {
 gulp.task('clean', require('del').bind(null, ['.tmp', 'dist']));
 
 /*启动开发环境服务*/
-gulp.task('serve', ['styles'], function () {
+gulp.task('serve', function () {
   browserSync({
     notify: false,
     port: 9000,
@@ -108,7 +108,8 @@ gulp.task('serve', ['styles'], function () {
     'app/resource/**/*'
   ]).on('change', reload);
 
-  gulp.watch('app/**/*.css', ['styles']);
+  //gulp.watch('app/**/*.css', ['styles']);
+  gulp.watch('app/**/*.css').on('change', reload);
   gulp.watch('bower.json', ['wiredep']);
 });
 
