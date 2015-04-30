@@ -32,7 +32,12 @@ generator-pg-cloud(云端前端环境生成器)
         2.$bower uninstall --save jquery
         在gulp serve开启的情况下，运行以上命令，将会自动注入或移除依赖 <!--bower:js--> 标签
         
-###使用seajs
+###如何压缩CSS,JS
+        将html文件中的script标签写入<!--build:js-->，将link标签写入<!--build:css-->,则可压缩包括在注释标签内的文件，理论上
+        所有的JS和CSS文件都应包括在内（seajs）
+        
+
+###使用和压缩seajs
         1.因为新版的seajs于老版本的区别，请使用script标签当作use入口文件，并添加seajs属性，如此seajs-pg-cloud可进行自动搜寻
         后合并压缩。
         
