@@ -34,7 +34,7 @@ generator-pg-cloud(云端前端环境生成器)
         
 ###如何压缩CSS,JS
         将html文件中的script标签写入<!--build:js-->，将link标签写入<!--build:css-->,则可压缩包括在注释标签内的文件，理论上
-        所有的JS和CSS文件都应包括在内（seajs）
+        所有的JS和CSS文件都应包括在内（seajs除外）
         
 
 ###使用和压缩seajs
