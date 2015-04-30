@@ -1,4 +1,4 @@
-generator-pg-cloud(云端前端环境生成器)
+generator-pg-cloud(云端前端环境生成器1.1.0)
 ========================
 
 ###why do it?
