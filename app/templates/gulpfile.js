@@ -4,6 +4,8 @@
 var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     browserSync = require('browser-sync'),
+    imagemin = require('gulp-imagemin'),
+    pngquant = require('imagemin-pngquant'),
     reload = browserSync.reload;
 
 <%if(includeSeajs){%>
@@ -43,28 +45,21 @@ gulp.task('html', function () {
 });
 
 /*压缩图片*/
-gulp.task('images', function () {
+gulp.task('compressImage', function () {
+    return gulp.src('app/resource/images/**/*.*')
+        .pipe(imagemin({
+            progressive: true,
+            optimizationLevel:3,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest('app/resource/images'));
+});
+
+gulp.task('images', ['compressImage'], function () {
   return gulp.src('app/resource/**/*')
     .pipe(gulp.dest('dist/resource'));
 });
-
-// gulp.task('images', function () {
-//   return gulp.src('app/resource/**/*')
-//     .pipe($.cache($.imagemin({
-//       progressive: true,
-//       interlaced: true,
-//       svgoPlugins: [{cleanupIDs: false}]
-//     })))
-//     .pipe(gulp.dest('dist/resource'));
-// });
-
-// gulp.task('fonts', function () {
-//   return gulp.src(require('main-bower-files')({
-//     filter: '**/*.{eot,svg,ttf,woff,woff2}'
-//   }).concat('app/fonts/**/*'))
-//     .pipe(gulp.dest('.tmp/fonts'))
-//     .pipe(gulp.dest('dist/fonts'));
-// });
 
 gulp.task('extras', function () {
   return gulp.src([
