@@ -1,4 +1,4 @@
-generator-pg-cloud(云端前端环境生成器)
+generator-pg-cloud(云端前端环境生成器1.1.0)
 ========================
 
 ###why do it?
@@ -31,12 +31,22 @@ generator-pg-cloud(云端前端环境生成器)
         1.$bower install --save jquery
         2.$bower uninstall --save jquery
         在gulp serve开启的情况下，运行以上命令，将会自动注入或移除依赖 <!--bower:js--> 标签
-###使用seajs
+        
+###如何压缩CSS,JS
+        将html文件中的script标签写入<!--build:js-->，将link标签写入<!--build:css-->,则可压缩包括在注释标签内的文件，理论上
+        所有的JS和CSS文件都应包括在内（seajs除外）
+        
+
+###使用和压缩seajs
         1.因为新版的seajs于老版本的区别，请使用script标签当作use入口文件，并添加seajs属性，如此seajs-pg-cloud可进行自动搜寻
         后合并压缩。
         
+###如何升级当前工程环境
+        当有新的生成器环境时，老的工程如果需要更新到最新的环境，在工程内运行yo pg-cloud, 这时生成器会检测是否已经存在工程，
+        如已存在工程，则提示是否升级工程，选择是则升级工程，否则退出当前进程。
         
-
+###工程是别人初始化的，在你第一次从git上拉下代码之后，应该做什么？
+    若工程非本人创建，则在第一次拉取到代码之后，需要手动运行npm install安装环境需要的插件和工具。
 ## License
 
 [BSD license](http://opensource.org/licenses/bsd-license.php)
