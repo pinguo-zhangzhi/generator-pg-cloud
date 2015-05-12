@@ -4,19 +4,30 @@
 var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     browserSync = require('browser-sync'),
-    imagemin = require('gulp-imagemin'),
-    pngquant = require('imagemin-pngquant'),
+    // imagemin = require('gulp-imagemin'),
+    // pngquant = require('imagemin-pngquant'),
     reload = browserSync.reload;
 
-<%if(includeSeajs){%>
-var seajsCombo = require('seajs-pg-cloud');
+<%if(includeBrowserify || includeReactJS){%>
+var combo = require('seajs-pg-cloud');
 
-gulp.task('seajs', function(){
-    gulp.src('dist/**/*.html')
-    .pipe(seajsCombo({
-        pwdPath:process.env.PWD
+/*暂不支持seajs,请勿运行*/
+// gulp.task('compressSeaJS', function(){
+//     gulp.src('dist/**/*.html') 
+//     .pipe(combo.compressSeaJS({
+//         pwdPath:process.env.PWD
+//     }))
+//     .pipe(gulp.dest('dist'));
+// });
+
+gulp.task('compileBrowserify', function(){
+  gulp.src('app/**/*.html')  
+    .pipe(combo.compileBrowserify({
+        pwdPath:process.env.PWD || process.env.INIT_CWD
+    }, function(){
+      reload();
     }))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('app'));
 });
 
 <%}%>
@@ -45,18 +56,23 @@ gulp.task('html', function () {
 });
 
 /*压缩图片*/
-gulp.task('compressImage', function () {
-    return gulp.src('app/resource/images/**/*.*')
-        .pipe(imagemin({
-            progressive: true,
-            optimizationLevel:3,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()]
-        }))
-        .pipe(gulp.dest('app/resource/images'));
-});
+// gulp.task('compressImage', function () {
+//     return gulp.src('app/resource/images/**/*.*')
+//         .pipe(imagemin({
+//             progressive: true,
+//             optimizationLevel:3,
+//             svgoPlugins: [{removeViewBox: false}],
+//             use: [pngquant()]
+//         }))
+//         .pipe(gulp.dest('app/resource/images'));
+// });
 
-gulp.task('images', ['compressImage'], function () {
+// gulp.task('images', ['compressImage'], function () {
+//   return gulp.src('app/resource/**/*')
+//     .pipe(gulp.dest('dist/resource'));
+// });
+
+gulp.task('images', function () {
   return gulp.src('app/resource/**/*')
     .pipe(gulp.dest('dist/resource'));
 });
@@ -91,7 +107,13 @@ gulp.task('serve', function () {
     'app/**/*.html',
     'app/**/*.js',
     'app/resource/**/*'
-  ]).on('change', reload);
+  ]).on('change', function(){
+    <%if(includeBrowserify || includeReactJS){%>
+      gulp.start('compileBrowserify');
+    <%}else{%>
+      reload();
+    <%}%>
+  });
 
   gulp.watch('app/**/*.css').on('change', reload);
   gulp.watch('bower.json', ['wiredep']);
@@ -123,7 +145,7 @@ gulp.task('wiredep', function () {
 });
 
 /*构建备用方法*/
-gulp.task('build', ['wiredep', 'html', 'images', 'extras'], function () {
+gulp.task('build', ['html', 'images', 'extras'], function () {
   <%if(includeSeajs){%>gulp.start('seajs');<%}%>
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });

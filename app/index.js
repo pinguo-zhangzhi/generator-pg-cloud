@@ -2,8 +2,6 @@
 var fs = require('fs');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
-var chalk = require('chalk');
 var wiredep = require('wiredep');
 
 var deleteFolderRecursive = function(path) {
@@ -55,6 +53,10 @@ if (appExist) {
       this.pkg = require('../package.json');
       this.allowUpdate = false;
       this.includeSeajs = false;
+      this.includeBrowserify = false;
+      this.includeReactJS = false;
+      if(fs.existsSync(process.env.PWD+"/node_modules/browserify")) this.includeBrowserify = true;
+      if(fs.existsSync(process.env.PWD+"/node_modules/react")) this.includeReactJS = true;
     },
 
     prompting: function () {
@@ -69,6 +71,14 @@ if (appExist) {
           name:'是否进行环境升级？',
           value:'allowUpdate',
           checked:false
+        },{
+          name:'Browserify',
+          value:'includeBrowserify',
+          checked:false
+        },{
+          name:'ReactJS',
+          value:'includeReactJS',
+          checked:false
         }]
       }];
 
@@ -80,9 +90,11 @@ if (appExist) {
         };
 
         this.allowUpdate = hasFeature('allowUpdate');
+        this.includeBrowserify = hasFeature('includeBrowserify');
+        this.includeReactJS = hasFeature('includeReactJS');
 
         if (!this.allowUpdate){
-          this.log(yosay('升级已终止。'));
+          this.log('==========升级已终止。==========');
           process.exit();
         }else{
           deleteFolderRecursive(process.env.PWD+'/node_modules');
@@ -129,7 +141,7 @@ if (appExist) {
       });
 
       this.on('end', function () {
-        this.log(yosay('构建环境升级成功'));
+        this.log('==========构建环境升级成功==========');
       }.bind(this));
     }
 
@@ -174,7 +186,7 @@ if (appExist) {
       var done = this.async();
 
       if (!this.options['skip-welcome-message']) {
-        this.log(yosay('\'Allo \'allo! Out of the box I include HTML5 Boilerplate, jQuery, and a gulpfile.js to build your app.'));
+        this.log('==========\'Allo \'allo! Out of the box I include HTML5 Boilerplate, jQuery, and a gulpfile.js to build your app.==========');
       }
 
       var prompts = [{
@@ -184,16 +196,21 @@ if (appExist) {
         choices: [{
           name:'jQuery',
           value:'includeJquery',
-          checked:true
+          checked:false
         },{
           name:'Backbone',
           value:'includeBackbone',
+          checked:false
+        },{
+          name:'ReactJS',
+          value:'includeReactJS',
           checked:true
         },{
-          name:'Seajs',
-          value:'includeSeajs',
+          name:'Browserify',
+          value:'includeBrowserify',
           checked:true
-        }]
+        }
+        ]
       }];
 
       this.prompt(prompts, function (answers) {
@@ -204,6 +221,8 @@ if (appExist) {
         };
 
         //this.includeSass = hasFeature('includeSass');
+        this.includeBrowserify = hasFeature('includeBrowserify');
+        this.includeReactJS = hasFeature('includeReactJS');
         this.includeJquery = hasFeature('includeJquery');
         this.includeBackbone = hasFeature('includeBackbone');
         this.includeSeajs = hasFeature('includeSeajs');
@@ -235,7 +254,7 @@ if (appExist) {
 
         if (this.includeJquery) bower.dependencies.jquery = '~2.1.1';
         if (this.includeBackbone) bower.dependencies.backbone = '*';
-        if (this.includeSeajs) bower.dependencies.seajs = '*';
+        //if (this.includeSeajs) bower.dependencies.seajs = '*';
 
         this.copy('bowerrc', '.bowerrc');
         this.write('bower.json', JSON.stringify(bower, null, 2));
@@ -282,6 +301,7 @@ if (appExist) {
       },
 
       app: function () {
+        if (this.includeBrowserify || this.includeReactJS) this.mkdir('app/.tmp');
         this.mkdir('app');
         this.mkdir('app/components');
         this.mkdir('app/common');
@@ -296,11 +316,10 @@ if (appExist) {
       
       var howToInstall =
         '\nAfter running ' +
-        chalk.yellow.bold('npm install & bower install') +
+        'npm install & bower install' +
         ', inject your' +
         '\nfront end dependencies by running ' +
-        chalk.yellow.bold('gulp wiredep') +
-        '.';
+        'gulp wiredep.';
 
       if (this.options['skip-install']) {
         this.log(howToInstall);

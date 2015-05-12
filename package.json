@@ -1,6 +1,6 @@
 {
   "name": "generator-pg-cloud",
-  "version": "1.1.2",
+  "version": "1.2.7",
   "description": "Scaffold out a front-end web app For PG tech",
   "license": "BSD",
   "repository": {
@@ -32,10 +32,8 @@
     "gulp"
   ],
   "dependencies": {
-    "chalk": "^0.5.1",
     "wiredep": "^2.2.2",
-    "yeoman-generator": "^0.18.5",
-    "yosay": "^1.0.0"
+    "yeoman-generator": "^0.18.5"
   },
   "peerDependencies": {
     "yo": ">=1.0.0",
@@ -51,8 +49,8 @@
   "bugs": {
     "url": "https://github.com/pinguo-zhangzhi/generator-pg-cloud/issues"
   },
-  "_id": "generator-pg-cloud@1.1.1",
-  "_shasum": "0a8727b7b1d56e50db981cd8fee5f32c28d134c0",
+  "_id": "generator-pg-cloud@1.2.5",
+  "_shasum": "dd223db826228d606e99e05228ea5f8d0cf21c8c",
   "_from": "generator-pg-cloud@*",
   "gitHead": "9a2d1f7aaea26045b018b25afebf7a51201c6964"
 }
