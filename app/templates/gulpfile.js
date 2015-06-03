@@ -8,8 +8,10 @@ var gulp = require('gulp'),
     // pngquant = require('imagemin-pngquant'),
     reload = browserSync.reload;
 
-<%if(includeBrowserify || includeReactJS){%>
+
 var combo = require('seajs-pg-cloud');
+
+<%if(includeBrowserify || includeReactJS){%>
 
 /*暂不支持seajs,请勿运行*/
 // gulp.task('compressSeaJS', function(){
@@ -31,6 +33,15 @@ gulp.task('compileBrowserify', function(){
 });
 
 <%}%>
+
+
+gulp.task('parsePath', function(){
+  gulp.src('dist/**/*.html')
+  .pipe(combo.parsePath({
+    pwdPath:process.cwd()
+  }))
+  .pipe(gulp.dest('dist'));
+});
 
 /*JS语法检查*/
 gulp.task('jshint', function () {
@@ -92,12 +103,13 @@ gulp.task('clean', require('del').bind(null, ['.tmp', 'dist']));
 gulp.task('serve', function () {
   browserSync({
     notify: false,
-    port: 9000,
-    startPath:'/views',
+    port: 9090,
+    startPath:'/',
     server: {
       baseDir: ['.tmp', 'app'],
       routes: {
-        '/bower_components': 'bower_components'
+        '/bower_components': 'bower_components',
+        '/node_modules':'node_modules'
       }
     }
   });
@@ -153,4 +165,38 @@ gulp.task('build', ['html', 'images', 'extras'], function () {
 /*构建建议方法*/
 gulp.task('default', ['clean'], function () {
   gulp.start('build');
+});
+
+
+
+gulp.task('debug', function(){
+
+  var  http = require('http'), 
+      socketio = require('socket.io'),
+      url = require("url"),
+      ioClient = null;
+
+ 
+  var server = http.createServer(function(req, res) {
+    var params = url.parse(req.url, true).query;
+    res.writeHead(200, {
+        'Content-Type': 'text/plain;charset=utf-8'
+    });
+
+    res.write(new Buffer(JSON.stringify(params)));
+    res.end();
+
+    console.log(JSON.stringify(params));
+
+    if (ioClient){
+      ioClient.emit('message', params);
+    } 
+  });
+
+  server.listen(3000);
+
+  socketio.listen(server).on('connection', function (client) {
+      ioClient = client;
+  });
+
 });

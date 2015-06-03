@@ -20,7 +20,9 @@ var deleteFolderRecursive = function(path) {
             }
           };
 
-var appExist = fs.existsSync(process.env.PWD+"/app");
+var appPath = process.cwd(); 
+
+var appExist = fs.existsSync(appPath+"/app");
 if (appExist) {
 
   module.exports = yeoman.generators.Base.extend({
@@ -269,7 +271,6 @@ if (appExist) {
       },
 
       h5bp: function () {
-        this.copy('favicon.ico', 'app/favicon.ico');
         this.copy('robots.txt', 'app/robots.txt');
       },
 
@@ -297,7 +298,7 @@ if (appExist) {
         });
     
 
-        this.write('app/views/index.html', this.indexFile);
+        this.write('app/index.html', this.indexFile);
       },
 
       app: function () {
@@ -309,6 +310,7 @@ if (appExist) {
         this.mkdir('app/resource');
         this.mkdir('app/resource/images');
         this.copy('index.js', 'app/views/index.js');
+        this.copy('debug.html', 'app/views/debug.html');
       }
     },
 
