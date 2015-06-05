@@ -97,7 +97,7 @@ gulp.task('extras', function () {
   }).pipe(gulp.dest('dist'));
 });
 
-gulp.task('clean', require('del').bind(null, ['.tmp', 'dist']));
+gulp.task('clean', require('del').bind(null, ['dist']));
 
 /*启动开发环境服务*/
 gulp.task('serve', function () {
@@ -109,7 +109,8 @@ gulp.task('serve', function () {
       baseDir: ['.tmp', 'app'],
       routes: {
         '/bower_components': 'bower_components',
-        '/node_modules':'node_modules'
+        '/node_modules':'node_modules',
+        '/.tmp':'.tmp'
       }
     }
   });

@@ -121,11 +121,6 @@ if (appExist) {
         this.template('_package.json', 'package.json');
       },
 
-      git: function() {
-        this.copy('gitignore', '.gitignore');
-        this.copy('gitattributes', '.gitattributes');
-      },
-
       jshint: function () {
         this.copy('jshintrc', '.jshintrc');
       },
@@ -136,6 +131,8 @@ if (appExist) {
     },
 
     install: function () {
+    
+      this.mkdir('.tmp');
     
       this.installDependencies({
         skipMessage: this.options['skip-install-message'],
@@ -302,7 +299,7 @@ if (appExist) {
       },
 
       app: function () {
-        if (this.includeBrowserify || this.includeReactJS) this.mkdir('app/.tmp');
+        if (this.includeBrowserify || this.includeReactJS) this.mkdir('.tmp');
         this.mkdir('app');
         this.mkdir('app/components');
         this.mkdir('app/common');
@@ -343,7 +340,7 @@ if (appExist) {
           //排除列表
           exclude: [],
           ignorePath: /^(\.\.\/)*\.\./,
-          src: 'app/views/index.html'
+          src: 'app/index.html'
         });
 
         // if (this.includeSass) {

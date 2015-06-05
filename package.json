@@ -1,6 +1,6 @@
 {
   "name": "generator-pg-cloud",
-  "version": "1.3.4",
+  "version": "1.3.8",
   "description": "Scaffold out a front-end web app For PG tech",
   "license": "BSD",
   "repository": {
@@ -8,7 +8,8 @@
     "url": "https://github.com/pinguo-zhangzhi/generator-pg-cloud"
   },
   "author": {
-    "name": "zhangzhi"
+    "name": "zhangzhi",
+    "name": "pinguo-luozhong"
   },
   "main": "app/index.js",
   "engines": {
