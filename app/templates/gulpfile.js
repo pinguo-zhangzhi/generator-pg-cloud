@@ -117,7 +117,6 @@ gulp.task('serve', function () {
 
   /*监听文件改变*/
   gulp.watch([
-    'app/**/*.html',
     'app/**/*.js',
     'app/resource/**/*'
   ]).on('change', function(){
@@ -128,7 +127,7 @@ gulp.task('serve', function () {
     <%}%>
   });
 
-  gulp.watch('app/**/*.css').on('change', reload);
+  gulp.watch(['app/**/*.css','app/**/*.html']).on('change', reload);
   gulp.watch('bower.json', ['wiredep']);
 });
 
