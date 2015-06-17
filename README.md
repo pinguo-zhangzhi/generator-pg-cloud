@@ -36,7 +36,7 @@ generator-pg-cloud(云端前端环境生成器)
 
 
 
-<!----------------------------------------2015-06-10更新 by luozhong------------------------------------------------------------>
+<!----------------------------------------2015-06-10文档更新 by luozhong------------------------------------------------------------>
 
 ###标签解释
         1. <!-- build:js /scripts/base.min.js -->
@@ -75,13 +75,13 @@ generator-pg-cloud(云端前端环境生成器)
         1.运行gulp debug
         2.在项目中任何需要debug的地方，发送get请求到http://localhost:3000,会在debug.html控制台显示cansole 信息
 
-###更新说明
+###  @1.3.9  更新说明
         1.版本：@1.3.9
         2.时间：2015/06/08
         3.作者：luozhong@camera360.com
         4.变更：修改代码时html文件偶尔被删掉的问题
 
-###更新说明
+###  @1.4.3  更新说明
         1.版本：@1.4.3
         2.时间：2015/06/09
         3.作者：zhangzhi@camera360.com
@@ -89,6 +89,13 @@ generator-pg-cloud(云端前端环境生成器)
                 支持ECMAScript 6语法(通过browserify插件编译)
                 当选择安装react或ECMA6时，将强制安装browserify
                 Reflux将替代flux
+
+###  @1.4.4  更新说明
+        1.版本：@1.4.4
+        2.时间：2015/06/17
+        3.作者：zhangzhi@camera360.com
+        4.变更：修复拉取别人已构建的项目后不会自动生成.tmp文件夹bug
+        
 
 [BSD license](http://opensource.org/licenses/bsd-license.php)
 

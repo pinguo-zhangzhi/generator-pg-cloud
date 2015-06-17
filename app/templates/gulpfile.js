@@ -112,7 +112,7 @@ gulp.task('serve', function () {
       }
     }
   });
-
+ gulp.start('compileBrowserify');
   /*监听文件改变*/
   gulp.watch([
     'app/**/*.js'
