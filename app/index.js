@@ -57,8 +57,10 @@ if (appExist) {
       this.includeSeajs = false;
       this.includeBrowserify = false;
       this.includeReactJS = false;
+      this.supportECMA6 = false;
       if(fs.existsSync(process.env.PWD+"/node_modules/browserify")) this.includeBrowserify = true;
       if(fs.existsSync(process.env.PWD+"/node_modules/react")) this.includeReactJS = true;
+      if(fs.existsSync(process.env.PWD+"/node_modules/babelify")) this.includeReactJS = true;
     },
 
     prompting: function () {
@@ -76,11 +78,15 @@ if (appExist) {
         },{
           name:'Browserify',
           value:'includeBrowserify',
-          checked:false
+          checked:this.includeBrowserify
         },{
-          name:'ReactJS',
+          name:'React and Reflux',
           value:'includeReactJS',
-          checked:false
+          checked:this.includeReactJS
+        },{
+          name:'Support ECMAScript 6',
+          value:'supportECMA6',
+          checked:this.supportECMA6
         }]
       }];
 
@@ -94,6 +100,7 @@ if (appExist) {
         this.allowUpdate = hasFeature('allowUpdate');
         this.includeBrowserify = hasFeature('includeBrowserify');
         this.includeReactJS = hasFeature('includeReactJS');
+        this.supportECMA6 = hasFeature('supportECMA6');
 
         if (!this.allowUpdate){
           this.log('==========升级已终止。==========');
@@ -201,13 +208,17 @@ if (appExist) {
           value:'includeBackbone',
           checked:false
         },{
-          name:'ReactJS',
+          name:'React and Reflux',
           value:'includeReactJS',
           checked:true
         },{
           name:'Browserify',
           value:'includeBrowserify',
           checked:true
+        },{
+          name:'Support ECMAScript 6',
+          value:'supportECMA6',
+          checked:false
         }
         ]
       }];
@@ -225,6 +236,7 @@ if (appExist) {
         this.includeJquery = hasFeature('includeJquery');
         this.includeBackbone = hasFeature('includeBackbone');
         this.includeSeajs = hasFeature('includeSeajs');
+        this.supportECMA6 = hasFeature('supportECMA6');
 
         done();
       }.bind(this));

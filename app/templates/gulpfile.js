@@ -2,18 +2,16 @@
 'use strict';
 // generated on <%= (new Date).toISOString().split('T')[0] %> using <%= pkg.name %> <%= pkg.version %>
 var gulp = require('gulp'),
-    $ = require('gulp-load-plugins')(),
-    browserSync = require('browser-sync'),
+$ = require('gulp-load-plugins')(),
+browserSync = require('browser-sync'),
     // imagemin = require('gulp-imagemin'),
     // pngquant = require('imagemin-pngquant'),
     reload = browserSync.reload;
+    var combo = require('seajs-pg-cloud');
 
+    <%if(includeBrowserify || includeReactJS){%>
 
-var combo = require('seajs-pg-cloud');
-
-<%if(includeBrowserify || includeReactJS){%>
-
-/*暂不支持seajs,请勿运行*/
+      /*暂不支持seajs,请勿运行*/
 // gulp.task('compressSeaJS', function(){
 //     gulp.src('dist/**/*.html') 
 //     .pipe(combo.compressSeaJS({
@@ -24,12 +22,18 @@ var combo = require('seajs-pg-cloud');
 
 gulp.task('compileBrowserify', function(){
   gulp.src('app/**/*.html')  
-    .pipe(combo.compileBrowserify({
-        pwdPath:process.env.PWD || process.env.INIT_CWD
-    }, function(){
-      reload();
-    }))
-    .pipe(gulp.dest('app'));
+  .pipe(combo.compileBrowserify({
+    <%if(supportECMA6){%>
+      pwdPath:process.env.PWD || process.env.INIT_CWD,
+      supportECMA6:true
+    <%}else{%>
+      pwdPath:process.env.PWD || process.env.INIT_CWD
+    <%}%>
+    
+  }, function(){
+    reload();
+  }))
+  .pipe(gulp.dest('app'));
 });
 
 <%}%>
@@ -46,10 +50,10 @@ gulp.task('parsePath', function(){
 /*JS语法检查*/
 gulp.task('jshint', function () {
   return gulp.src('app/**/*.js')
-    .pipe(reload({stream: true, once: true}))
-    .pipe($.jshint())
-    .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
+  .pipe(reload({stream: true, once: true}))
+  .pipe($.jshint())
+  .pipe($.jshint.reporter('jshint-stylish'))
+  .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
 
 /*解析html文件并进行标签build*/
@@ -57,13 +61,13 @@ gulp.task('html', function () {
   var assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
 
   return gulp.src('app/**/*.html')
-    .pipe(assets)
-    .pipe($.if('*.js', $.uglify()))
-    .pipe($.if('*.css', $.csso()))
-    .pipe(assets.restore())
-    .pipe($.useref())
-    .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true})))
-    .pipe(gulp.dest('dist'));
+  .pipe(assets)
+  .pipe($.if('*.js', $.uglify()))
+  .pipe($.if('*.css', $.csso()))
+  .pipe(assets.restore())
+  .pipe($.useref())
+  .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true})))
+  .pipe(gulp.dest('dist'));
 });
 
 /*压缩图片*/
@@ -85,16 +89,16 @@ gulp.task('html', function () {
 
 gulp.task('images', function () {
   return gulp.src('app/resource/**/*')
-    .pipe(gulp.dest('dist/resource'));
+  .pipe(gulp.dest('dist/resource'));
 });
 
 gulp.task('extras', function () {
   return gulp.src([
     'app/*.*',
     '!app/*.html'
-  ], {
-    dot: true
-  }).pipe(gulp.dest('dist'));
+    ], {
+      dot: true
+    }).pipe(gulp.dest('dist'));
 });
 
 gulp.task('clean', require('del').bind(null, ['dist']));
@@ -115,22 +119,22 @@ gulp.task('serve', function () {
     }
   });
 
+  gulp.start('compileBrowserify');
+
   /*监听文件改变*/
   gulp.watch([
-    'app/**/*.html',
-    'app/**/*.js',
-    'app/resource/**/*'
-  ]).on('change', function(){
-    <%if(includeBrowserify || includeReactJS){%>
-      gulp.start('compileBrowserify');
-    <%}else{%>
-      reload();
-    <%}%>
-  });
+    'app/**/*.js'
+    ]).on('change', function(){
+      <%if(includeBrowserify || includeReactJS){%>
+        gulp.start('compileBrowserify');
+        <%}else{%>
+          reload();
+          <%}%>
+        });
 
-  gulp.watch('app/**/*.css').on('change', reload);
-  gulp.watch('bower.json', ['wiredep']);
-});
+    gulp.watch(['app/**/*.css','app/**/*.html','app/resource/**/*']).on('change', reload);
+    gulp.watch('bower.json', ['wiredep']);
+  });
 
 /*启动构建环境服务*/
 gulp.task('dist', function () {
@@ -151,10 +155,10 @@ gulp.task('dist', function () {
 gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
   gulp.src('app/**/*.html')
-    .pipe(wiredep({
-      ignorePath: /^(\.\.\/)*\.\./
-    }))
-    .pipe(gulp.dest('app'));
+  .pipe(wiredep({
+    ignorePath: /^(\.\.\/)*\.\./
+  }))
+  .pipe(gulp.dest('app'));
 });
 
 /*构建备用方法*/
@@ -173,15 +177,15 @@ gulp.task('default', ['clean'], function () {
 gulp.task('debug', function(){
 
   var  http = require('http'), 
-      socketio = require('socket.io'),
-      url = require("url"),
-      ioClient = null;
+  socketio = require('socket.io'),
+  url = require("url"),
+  ioClient = null;
 
- 
+
   var server = http.createServer(function(req, res) {
     var params = url.parse(req.url, true).query;
     res.writeHead(200, {
-        'Content-Type': 'text/plain;charset=utf-8'
+      'Content-Type': 'text/plain;charset=utf-8'
     });
 
     res.write(new Buffer(JSON.stringify(params)));
@@ -197,7 +201,7 @@ gulp.task('debug', function(){
   server.listen(3000);
 
   socketio.listen(server).on('connection', function (client) {
-      ioClient = client;
+    ioClient = client;
   });
 
 });
