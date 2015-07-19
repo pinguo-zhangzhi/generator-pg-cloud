@@ -25,6 +25,18 @@
     <!-- build:js /scripts/base.min.js -->
     <!-- bower:js -->
     <!-- endbower -->
+      <%if(includeReactJS){%>
+        <script type="text/javascript" src="/node_modules/react/dist/react-with-addons.min.js"></script>
+        <script type="text/javascript" src="/node_modules/reflux/dist/reflux.min.js"></script>
+      <%}%>
+    <!-- endbuild -->
+
+    <!-- build:js /scripts/index/index.js -->
+      <%if(includeBrowserify || includeReactJS || supportECMA6){%>
+        <script type="text/javascript" browserify=/views/index.js></script>
+      <%}else{%>
+        <script type="text/javascript" src="/views/index.js"></script>
+      <%}%>
     <!-- endbuild -->
   </body>
 </html>

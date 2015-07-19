@@ -95,7 +95,13 @@ generator-pg-cloud(云端前端环境生成器)
         2.时间：2015/06/17
         3.作者：zhangzhi@camera360.com
         4.变更：修复拉取别人已构建的项目后不会自动生成.tmp文件夹bug
-        
+
+###  @1.5.0  更新说明
+        1.版本：@1.5.0
+        2.时间：2015/07/19
+        3.作者：zhangzhi@camera360.com
+        4.变更：做一些方便的修改，包括生成环境后，根据选择项是否需要编译自动加入browserify属性。
+		根据是否需要React和Reflux自动引入文件。修复生成器一些bug。
 
 [BSD license](http://opensource.org/licenses/bsd-license.php)
 

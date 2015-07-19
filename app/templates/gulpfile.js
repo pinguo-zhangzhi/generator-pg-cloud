@@ -9,7 +9,7 @@ browserSync = require('browser-sync'),
     reload = browserSync.reload;
     var combo = require('seajs-pg-cloud');
 
-    <%if(includeBrowserify || includeReactJS){%>
+    <%if(includeBrowserify || includeReactJS || supportECMA6){%>
 
       /*暂不支持seajs,请勿运行*/
 // gulp.task('compressSeaJS', function(){

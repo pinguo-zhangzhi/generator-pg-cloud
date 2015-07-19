@@ -58,6 +58,7 @@ if (appExist) {
       this.includeBrowserify = false;
       this.includeReactJS = false;
       this.supportECMA6 = false;
+      //this.supportKits = false;
       if(fs.existsSync(process.env.PWD+"/node_modules/browserify")) this.includeBrowserify = true;
       if(fs.existsSync(process.env.PWD+"/node_modules/react")) this.includeReactJS = true;
       if(fs.existsSync(process.env.PWD+"/node_modules/babelify")) this.includeReactJS = true;
@@ -101,6 +102,10 @@ if (appExist) {
         this.includeBrowserify = hasFeature('includeBrowserify');
         this.includeReactJS = hasFeature('includeReactJS');
         this.supportECMA6 = hasFeature('supportECMA6');
+        //this.supportKits = hasFeature('supportKits');
+        if (this.includeReactJS || this.supportECMA6) {
+          this.includeBrowserify = true;
+        };
 
         if (!this.allowUpdate){
           this.log('==========升级已终止。==========');
@@ -219,8 +224,11 @@ if (appExist) {
           name:'Support ECMAScript 6',
           value:'supportECMA6',
           checked:false
-        }
-        ]
+        },{
+          name:'常规套件(PGBridge, PGClip, PGServer)',
+          value:'supportKits',
+          checked:this.supportKits
+        }]
       }];
 
       this.prompt(prompts, function (answers) {
@@ -237,6 +245,11 @@ if (appExist) {
         this.includeBackbone = hasFeature('includeBackbone');
         this.includeSeajs = hasFeature('includeSeajs');
         this.supportECMA6 = hasFeature('supportECMA6');
+        this.supportKits = hasFeature('supportKits');
+
+        if (this.includeReactJS || this.supportECMA6) {
+          this.includeBrowserify = true;
+        };
 
         done();
       }.bind(this));
@@ -249,6 +262,10 @@ if (appExist) {
 
       packageJSON: function() {
         this.template('_package.json', 'package.json');
+      },
+
+      writeIndex:function(){
+        this.template('index.html', 'app/index.html');
       },
 
       git: function() {
@@ -265,6 +282,7 @@ if (appExist) {
 
         if (this.includeJquery) bower.dependencies.jquery = '~2.1.1';
         if (this.includeBackbone) bower.dependencies.backbone = '*';
+        if (this.supportKits) bower.dependencies.PGBridge = '*';
         //if (this.includeSeajs) bower.dependencies.seajs = '*';
 
         this.copy('bowerrc', '.bowerrc');
@@ -295,20 +313,20 @@ if (appExist) {
         this.copy(css, 'app/views/' + css);
       },
 
-      writeIndex: function () {
-        this.indexFile = this.src.read('index.html');
-        this.indexFile = this.engine(this.indexFile, this);
+      // writeIndex: function () {
+      //   this.indexFile = this.src.read('index.html');
+      //   this.indexFile = this.engine(this.indexFile, this);
 
-        this.indexFile = this.appendFiles({
-          html: this.indexFile,
-          fileType: 'js',
-          optimizedPath: '/scripts/index/index.js',
-          sourceFileList: ['/views/index.js']
-        });
+      //   this.indexFile = this.appendFiles({
+      //     html: this.indexFile,
+      //     fileType: 'js',
+      //     optimizedPath: '/scripts/index/index.js',
+      //     sourceFileList: ['/views/index.js']
+      //   });
     
 
-        this.write('app/index.html', this.indexFile);
-      },
+      //   this.write('app/index.html', this.indexFile);
+      // },
 
       app: function () {
         if (this.includeBrowserify || this.includeReactJS) this.mkdir('.tmp');
