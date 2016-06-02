@@ -1,6 +1,6 @@
 {
   "name": "generator-pg-cloud",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Scaffold out a front-end web app For PG tech",
   "license": "BSD",
   "repository": {
