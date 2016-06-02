@@ -7,17 +7,21 @@
     [
       "generator-pg-cloud",
       ""
+    ],
+    [
+      "generator-pg-cloud",
+      ""
     ]
   ],
   "_from": "generator-pg-cloud@latest",
-  "_id": "generator-pg-cloud@1.6.7",
+  "_id": "generator-pg-cloud@1.6.6",
   "_inCache": true,
   "_installable": true,
   "_location": "/generator-pg-cloud",
   "_nodeVersion": "5.10.1",
   "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/generator-pg-cloud-1.6.4.tgz_1464855748500_0.5994698957074434"
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/generator-pg-cloud-1.6.6.tgz_1464857847112_0.6059764181263745"
   },
   "_npmUser": {
     "email": "zhangzhi@camera360.com",
@@ -55,8 +59,8 @@
   },
   "directories": {},
   "dist": {
-    "shasum": "c193e5d79aade6fb67ef6fcaddfc650b720f5c1c",
-    "tarball": "https://registry.npmjs.org/generator-pg-cloud/-/generator-pg-cloud-1.6.7.tgz"
+    "shasum": "2f26e430b4553d36bfc9ef2c3f4fda3708990467",
+    "tarball": "https://registry.npmjs.org/generator-pg-cloud/-/generator-pg-cloud-1.6.6.tgz"
   },
   "engines": {
     "node": ">=0.10.0",
