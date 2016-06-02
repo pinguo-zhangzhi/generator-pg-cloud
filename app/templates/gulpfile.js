@@ -47,6 +47,10 @@ gulp.task('parsePath', function(){
   .pipe(gulp.dest('dist'));
 });
 
+gulp.task('changePath',function(){
+   combo.changePath();
+});
+
 /*JS语法检查*/
 gulp.task('jshint', function () {
   return gulp.src('app/**/*.js')

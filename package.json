@@ -1,26 +1,72 @@
 {
-  "name": "generator-pg-cloud",
-  "version": "1.5.0",
-  "description": "Scaffold out a front-end web app For PG tech",
-  "license": "BSD",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pinguo-zhangzhi/generator-pg-cloud"
+  "_args": [
+    [
+      "generator-pg-cloud",
+      ""
+    ],
+    [
+      "generator-pg-cloud",
+      ""
+    ]
+  ],
+  "_from": "generator-pg-cloud@latest",
+  "_id": "generator-pg-cloud@1.6.7",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/generator-pg-cloud",
+  "_nodeVersion": "5.10.1",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/generator-pg-cloud-1.6.4.tgz_1464855748500_0.5994698957074434"
   },
+  "_npmUser": {
+    "email": "zhangzhi@camera360.com",
+    "name": "pinguo-zhangzhi"
+  },
+  "_npmVersion": "3.8.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "generator-pg-cloud",
+    "raw": "generator-pg-cloud",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_shrinkwrap": null,
+  "_spec": "generator-pg-cloud",
+  "_where": "",
   "author": {
     "name": "pinguo-luozhong"
   },
-  "main": "app/index.js",
+  "bugs": {
+    "url": "https://github.com/pinguo-zhangzhi/generator-pg-cloud/issues"
+  },
+  "dependencies": {
+    "wiredep": "^2.2.2",
+    "yeoman-generator": "^0.18.5"
+  },
+  "description": "Scaffold out a front-end web app For PG tech",
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "c193e5d79aade6fb67ef6fcaddfc650b720f5c1c",
+    "tarball": "https://registry.npmjs.org/generator-pg-cloud/-/generator-pg-cloud-1.6.7.tgz"
+  },
   "engines": {
     "node": ">=0.10.0",
     "npm": ">=1.3"
   },
-  "scripts": {
-    "test": "mocha --reporter spec"
-  },
   "files": [
     "app"
   ],
+  "gitHead": "9a2d1f7aaea26045b018b25afebf7a51201c6964",
+  "homepage": "https://github.com/pinguo-zhangzhi/generator-pg-cloud",
   "keywords": [
     "yeoman-generator",
     "web",
@@ -31,27 +77,36 @@
     "jquery",
     "gulp"
   ],
-  "dependencies": {
-    "wiredep": "^2.2.2",
-    "yeoman-generator": "^0.18.5"
-  },
+  "license": "BSD",
+  "main": "app/index.js",
+  "maintainers": [
+    {
+      "email": "zhangzhi@camera360.com",
+      "name": "pinguo-liangyunzhu"
+    },
+    {
+      "email": "luozhong@camera360.com",
+      "name": "pinguo-luozhong"
+    },
+    {
+      "email": "zhangzhi@camera360.com",
+      "name": "pinguo-zhangzhi"
+    }
+  ],
+  "name": "generator-pg-cloud",
+  "optionalDependencies": {},
   "peerDependencies": {
-    "yo": ">=1.0.0",
     "generator-mocha": ">=0.1.0",
-    "gulp": ">=3.5.0"
+    "gulp": ">=3.5.0",
+    "yo": ">=1.0.0"
   },
-  "devDependencies": {
-    "mocha": "*"
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinguo-zhangzhi/generator-pg-cloud.git"
   },
-  "homepage": "https://github.com/pinguo-zhangzhi/generator-pg-cloud",
-  "readme": "pg-cloud\n\n## License\n\n[BSD license](http://opensource.org/licenses/bsd-license.php)\n",
-  "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/pinguo-zhangzhi/generator-pg-cloud/issues"
+  "scripts": {
+    "test": "mocha --reporter spec"
   },
-  "_id": "generator-pg-cloud@1.4.9",
-  "_shasum": "bd4cb22a68c981edba7bf6f7993bed74b82cafa7",
-  "_from": "generator-pg-cloud@*",
-  "gitHead": "9a2d1f7aaea26045b018b25afebf7a51201c6964",
-  "_resolved": "file:../../Users/zhangzhi/work/generator-pg-cloud"
+  "version": "1.6.7"
 }
