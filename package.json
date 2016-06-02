@@ -1,11 +1,11 @@
 {
   "name": "generator-pg-cloud",
-  "version": "1.5.0",
+  "version": "1.6.3",
   "description": "Scaffold out a front-end web app For PG tech",
   "license": "BSD",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pinguo-zhangzhi/generator-pg-cloud"
+    "url": "git+https://github.com/pinguo-zhangzhi/generator-pg-cloud.git"
   },
   "author": {
     "name": "pinguo-luozhong"
@@ -44,14 +44,38 @@
     "mocha": "*"
   },
   "homepage": "https://github.com/pinguo-zhangzhi/generator-pg-cloud",
-  "readme": "pg-cloud\n\n## License\n\n[BSD license](http://opensource.org/licenses/bsd-license.php)\n",
-  "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/pinguo-zhangzhi/generator-pg-cloud/issues"
   },
-  "_id": "generator-pg-cloud@1.4.9",
-  "_shasum": "bd4cb22a68c981edba7bf6f7993bed74b82cafa7",
-  "_from": "generator-pg-cloud@*",
+  "_id": "generator-pg-cloud@1.6.0",
+  "_shasum": "5abe7ed7784a32e563edbfb312edbc2111fd1443",
+  "_from": "generator-pg-cloud@latest",
   "gitHead": "9a2d1f7aaea26045b018b25afebf7a51201c6964",
-  "_resolved": "file:../../Users/zhangzhi/work/generator-pg-cloud"
+  "_resolved": "https://registry.npmjs.org/generator-pg-cloud/-/generator-pg-cloud-1.6.0.tgz",
+  "_npmVersion": "2.11.2",
+  "_nodeVersion": "0.12.5",
+  "_npmUser": {
+    "name": "pinguo-liangyunzhu",
+    "email": "zhangzhi@camera360.com"
+  },
+  "dist": {
+    "shasum": "5abe7ed7784a32e563edbfb312edbc2111fd1443",
+    "tarball": "http://registry.npmjs.org/generator-pg-cloud/-/generator-pg-cloud-1.6.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "pinguo-liangyunzhu",
+      "email": "zhangzhi@camera360.com"
+    },
+    {
+      "name": "pinguo-luozhong",
+      "email": "luozhong@camera360.com"
+    },
+    {
+      "name": "pinguo-zhangzhi",
+      "email": "zhangzhi@camera360.com"
+    }
+  ],
+  "directories": {},
+  "readme": "ERROR: No README data found!"
 }
